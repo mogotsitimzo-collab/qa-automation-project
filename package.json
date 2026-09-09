@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "selenium-webdriver": "^4.48.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^26.5.0"
+  },
+  "scripts": {}
+}
