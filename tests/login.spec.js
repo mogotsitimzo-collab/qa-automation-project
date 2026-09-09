@@ -1,7 +1,10 @@
+// E-commerce QA - Login functionality tests
+
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage.js';
 
-test.describe('Login functionality', () => {
+
+test.describe('Login functionality - E-Commerce QA', () => {
 
     test('TC-001 - successful login', async ({ page }) => {
 
