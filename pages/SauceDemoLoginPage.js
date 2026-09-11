@@ -4,6 +4,7 @@ export class SauceDemoLoginPage {
         this.usernameInput = this.page.locator('#user-name');
         this.passwordInput = this.page.locator('#password');
         this.loginButton = this.page.getByRole('button', { name: 'Login' });
+        this.errorMessage = this.page.locator('[data-test="error"]');
     }
 
     async login(username, password) {
