@@ -3,19 +3,17 @@ import { SauceDemoLoginPage } from '../pages/SauceDemoLoginPage.js';
 
 
 test('TC-001 - successful SauceDemo login', async ({ page }) => {
-    await page.goto('https://www.saucedemo.com/'); 
-    await page.locator('#user-name').fill('standard_user');
-    await page.locator('#password').fill('secret_sauce');
-    await page.getByRole('button', { name: 'Login' }).click();
+    await page.goto('https://www.saucedemo.com/');
+    const loginPage = new SauceDemoLoginPage(page);
+    await loginPage.login('standard_user', 'secret_sauce');
     await expect(page).toHaveURL('https://www.saucedemo.com/inventory.html');
 });
 
 test('TC-002 - login with invalid password', async ({ page }) => {
     await page.goto('https://www.saucedemo.com/'); 
-    await page.locator('#user-name').fill('standard_user');
-    await page.locator('#password').fill('wrong_password');
-    await page.getByRole('button', { name: 'Login' }).click();
-    await expect(page.locator('[data-test="error"]')).toHaveText('Epic sadface: Username and password do not match any user in this service');
+    const loginPage = new SauceDemoLoginPage(page);
+    await loginPage.login('standard_user', 'wrong_password');
+    await expect(loginPage.errorMessage).toHaveText('Epic sadface: Username and password do not match any user in this service');
 });
 
 test('TC-003 - login with empty username', async ({ page }) => {
