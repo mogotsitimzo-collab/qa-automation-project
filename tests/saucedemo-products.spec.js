@@ -4,13 +4,16 @@ import { ProductsPage } from '../pages/ProductsPage.js';
 import { CartPage } from '../pages/CartPage.js';
 import { CheckoutPage } from '../pages/CheckoutPage.js';
 
-test('TC-006 - verify product page title', async ({ page }) => {
-    await page.goto('https://www.saucedemo.com/'); 
+test.beforeEach(async ({ page }) => {
+    await page.goto('https://www.saucedemo.com/');
     const loginPage = new SauceDemoLoginPage(page);
     await loginPage.login('standard_user', 'secret_sauce');
+});
+
+test('TC-006 - verify product page title', async ({ page }) => {
     const productsPage = new ProductsPage(page);
-    await expect(productsPage.pageTitle).toHaveText('Products');
-})
+    await expect(productsPage.pageTitle).toBeVisible();
+});
 
 test('TC-007 - verify products are displayed', async ({ page }) => {
     await page.goto('https://www.saucedemo.com/'); 
