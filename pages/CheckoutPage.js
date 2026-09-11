@@ -5,6 +5,7 @@ export class CheckoutPage {
         this.lastNameInput = this.page.locator('#last-name');
         this.postalCodeInput = this.page.locator('#postal-code');
         this.continueButton = this.page.getByRole('button', { name: 'Continue' });
+        this.finishButton = this.page.getByRole('button', { name: 'Finish' });
     }
 
 

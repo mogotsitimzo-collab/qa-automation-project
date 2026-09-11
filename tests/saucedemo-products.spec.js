@@ -145,3 +145,105 @@ test('TC-016 - verify checkout button functionality', async ({ page }) => {
     await checkoutPage.continueButton.click();
     });
 
+    test ('TC-017 - verify first name input', async ({ page }) => {
+    await page.goto('https://www.saucedemo.com/');
+    const loginPage = new SauceDemoLoginPage(page);
+    await loginPage.login('standard_user', 'secret_sauce');
+    const productsPage = new ProductsPage(page);
+    await productsPage.addToCartButton.first().click();
+    await productsPage.cartButton.click();
+    const cartPage = new CartPage(page);
+    await cartPage.checkoutButton.click();
+    const checkoutPage = new CheckoutPage(page);
+    await checkoutPage.lastNameInput.fill('Mogotsi');
+    await checkoutPage.postalCodeInput.fill('1540');
+    await checkoutPage.continueButton.click();
+    await expect(page.getByText('Error: First Name is required')).toBeVisible();    
+    });
+
+    test ('TC-018 - verify last name input', async ({ page }) => {
+    await page.goto('https://www.saucedemo.com/');
+    const loginPage = new SauceDemoLoginPage(page);
+    await loginPage.login('standard_user', 'secret_sauce');
+    const productsPage = new ProductsPage(page);
+    await productsPage.addToCartButton.first().click();
+    await productsPage.cartButton.click();
+    const cartPage = new CartPage(page);
+    await cartPage.checkoutButton.click();
+    const checkoutPage = new CheckoutPage(page);
+    await checkoutPage.firstNameInput.fill('Tshiamo');
+    await checkoutPage.postalCodeInput.fill('1540');
+    await checkoutPage.continueButton.click();
+    await expect(page.getByText('Error: Last Name is required')).toBeVisible();
+    });
+
+    test ('TC-019 - verify postal code input', async ({ page }) => {
+    await page.goto('https://www.saucedemo.com/');
+    const loginPage = new SauceDemoLoginPage(page);
+    await loginPage.login('standard_user', 'secret_sauce');
+    const productsPage = new ProductsPage(page);
+    await productsPage.addToCartButton.first().click();
+    await productsPage.cartButton.click();
+    const cartPage = new CartPage(page);
+    await cartPage.checkoutButton.click();
+    const checkoutPage = new CheckoutPage(page);
+    await checkoutPage.firstNameInput.fill('Tshiamo');
+    await checkoutPage.lastNameInput.fill('Mogotsi');
+    await checkoutPage.continueButton.click();
+    await expect(page.getByText('Error: Postal Code is required')).toBeVisible();
+    });
+
+    test('TC-020 - verify checkout process', async ({ page }) => {
+
+    await page.goto('https://www.saucedemo.com/');
+
+    const loginPage = new SauceDemoLoginPage(page);
+
+    await loginPage.login('standard_user', 'secret_sauce');
+
+    const productsPage = new ProductsPage(page);
+
+    const productName = await productsPage.productsNames.first().textContent();
+
+    await productsPage.addToCartButton.first().click();
+
+    await productsPage.cartButton.click();
+
+    const cartPage = new CartPage(page);
+
+    await cartPage.checkoutButton.click();
+
+    const checkoutPage = new CheckoutPage(page);
+
+    await checkoutPage.firstNameInput.fill('Tshiamo');
+
+    await checkoutPage.lastNameInput.fill('Mogotsi');
+
+    await checkoutPage.postalCodeInput.fill('1540');
+
+    await checkoutPage.continueButton.click();
+
+    await expect(page.getByText('Checkout: Overview')).toBeVisible();
+
+    await expect(page.getByText(productName)).toBeVisible();
+
+});
+
+test('TC-021 - verify finish button functionality', async ({ page }) => {
+
+    await page.goto('https://www.saucedemo.com/');
+    const loginPage = new SauceDemoLoginPage(page);
+    await loginPage.login('standard_user', 'secret_sauce');
+    const productsPage = new ProductsPage(page);
+    await productsPage.addToCartButton.first().click();
+    await productsPage.cartButton.click();
+    const cartPage = new CartPage(page);
+    await cartPage.checkoutButton.click();
+    const checkoutPage = new CheckoutPage(page);
+    await checkoutPage.firstNameInput.fill('Tshiamo');
+    await checkoutPage.lastNameInput.fill('Mogotsi');
+    await checkoutPage.postalCodeInput.fill('1540');
+    await checkoutPage.continueButton.click();
+    await checkoutPage.finishButton.click();
+    await expect(page.getByText('Thank you for your order!')).toBeVisible();
+});
